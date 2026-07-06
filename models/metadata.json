@@ -1,0 +1,14 @@
+{
+  "seed": 42,
+  "model_version": "rf_seed42_20260706",
+  "training_date": "2026-07-06",
+  "split": "chronological 80/20 by Time",
+  "imbalance_handling": "class_weight=balanced (LR and RF)",
+  "chosen_threshold": 0.25,
+  "test_precision": 0.5304347826086957,
+  "test_recall": 0.8243243243243243,
+  "test_f1": 0.6455026455026455,
+  "test_pr_auc_rf": 0.8099940865443888,
+  "test_roc_auc_rf": 0.9732086821081387,
+  "training_data_hash": "0c3db2480878371128704e43e0ae92ce14c12cf820f765486737678bfbbb4b9e"
+}

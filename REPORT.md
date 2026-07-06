@@ -12,9 +12,9 @@ Evaluated on the chronological test fold (~56,000 transactions) after dropping 1
 | :--- | :--- | :--- |
 | **PR-AUC (Average Precision)** | 0.5471 | **0.8100** |
 | **ROC-AUC** | 0.9634 | **0.9732** |
-| **Precision @ 0.5 Threshold** | 0.0526 | **0.8409** |
-| **Recall @ 0.5 Threshold** | **0.8919** | 0.5000 |
-| **F1-Score @ 0.5 Threshold** | 0.0994 | **0.6271** |
+| **Precision @ 0.5 Threshold** | 0.0526 | **0.9649** |
+| **Recall @ 0.5 Threshold** | **0.8919** | **0.7432** |
+| **F1-Score @ 0.5 Threshold** | 0.0994 | **0.8397** |
 | **Precision @ Optimized Threshold (0.25)** | 0.0886 | **0.5304** |
 | **Recall @ Optimized Threshold (0.25)** | **0.8919** | **0.8243** |
 | **F1-Score @ Optimized Threshold (0.25)** | 0.1612 | **0.6455** |
@@ -27,7 +27,7 @@ Evaluated on the chronological test fold (~56,000 transactions) after dropping 1
 
 ## 2. Threshold Selection Rationale & Cost Math
 
-Under a default decision threshold of **0.5**, the Random Forest model missed 37 fraud cases (False Negatives), and generated 7 false alarms (False Positives).
+Under a default decision threshold of **0.5**, the Random Forest model missed 19 fraud cases (False Negatives), and generated 2 false alarms (False Positives).
 
 To optimize for actual business value, we implement the following cost-based function:
 * **Cost of False Negative (FN)**: \$500 (Loss from missed fraud)
@@ -38,13 +38,13 @@ To optimize for actual business value, we implement the following cost-based fun
 ### Grid Scan Results:
 Scanning decision thresholds between `0.01` and `0.99` shows the following expected cost profiles on the test set:
 
-- **At Threshold 0.50**: 37 FN, 7 FP -> Cost = $(37 \times 500) + (7 \times 25) = \$18,500 + \$175 = \mathbf{\$18,675}$
+- **At Threshold 0.50**: 19 FN, 2 FP -> Cost = $(19 \times 500) + (2 \times 25) = \$9,500 + \$50 = \mathbf{\$9,550}$
 - **At Threshold 0.35**: 24 FN, 20 FP -> Cost = $(24 \times 500) + (20 \times 25) = \$12,000 + \$500 = \mathbf{\$12,500}$
 - **At Threshold 0.25 (Optimal)**: 13 FN, 54 FP -> Cost = $(13 \times 500) + (54 \times 25) = \$6,500 + \$1,350 = \mathbf{\$7,850}$
 - **At Threshold 0.15**: 12 FN, 126 FP -> Cost = $(12 \times 500) + (126 \times 25) = \$6,000 + \$3,150 = \mathbf{\$9,150}$
 
 ### Conclusion:
-Operating at **0.25** reduces total expected loss to **\$7,850** (a **\$10,825 saving** over the default 0.5 threshold). It intercepts **82.43%** of all fraud events while keeping the analyst queue at a manageable level (54 false alarms out of 56k transactions).
+Operating at **0.25** reduces total expected loss to **\$7,850** (a **\$1,700 saving** over the default 0.5 threshold). It intercepts **82.43%** of all fraud events while keeping the analyst queue at a manageable level (54 false alarms out of 56k transactions).
 
 ---
 

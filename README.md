@@ -94,7 +94,8 @@ txnintel/
 ### A. Environment Configuration
 Create a `.env` file in the root workspace folder matching `.env.example`:
 ```env
-DATABASE_URL=postgresql://postgres:Anisha26@localhost:5432/txnintel
+DATABASE_URL=postgresql://postgres:your_postgres_password@localhost:5432/txnintel
+POSTGRES_PASSWORD=your_postgres_password
 GEMINI_API_KEY=your_gemini_api_key_here
 GOOGLE_API_KEY=your_gemini_api_key_here
 ```

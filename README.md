@@ -1,4 +1,4 @@
-# txnintel: Credit Card Fraud Analytics & Serving Layer
+# Txnintel: Credit Card Fraud Analytics & Serving Layer
 
 This repository contains an end-to-end Machine Learning pipeline and API serving layer for evaluating credit card fraud transactions, generating natural language audit explanations, and containerized deployment.
 
